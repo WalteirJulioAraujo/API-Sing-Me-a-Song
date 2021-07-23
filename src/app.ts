@@ -11,4 +11,8 @@ app.use(express.json());
 app.post("/recommendations", songsController.sendSong);
 
 app.post("/recommendatios/:id/upvote", voteController.upVote);
+
+app.post("/recommendatios/:id/downvote", voteController.downVote);
+
+
 export default app;

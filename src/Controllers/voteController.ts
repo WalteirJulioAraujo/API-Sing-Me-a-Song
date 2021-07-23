@@ -20,3 +20,22 @@ export async function upVote(req:Request,res:Response) {
         res.sendStatus(500);
     }
 }
+
+export async function downVote(req:Request,res:Response) {
+    const id  = Number(req.params.id);
+
+    const validate = vote.validate({id});
+    if(validate.error){
+        console.log(validate.error);
+        return res.sendStatus(400);
+    }
+    try{
+        const result = await voteService.downVote(id);
+        if(!result) return res.sendStatus(401);
+        res.sendStatus(200);
+
+    }catch(error){
+        console.log(error);
+        res.sendStatus(500);
+    }
+}

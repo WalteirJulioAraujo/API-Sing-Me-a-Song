@@ -17,3 +17,13 @@ export async function insertFirstVote(id:number) {
 export async function upVote(id:number) {
     await connection.query(`UPDATE songscore SET score=score+1 WHERE "songId"=$1`,[id]);
 }
+
+export async function downVote(id:number) {
+   const result = await connection.query(`UPDATE songscore SET score=score-1 WHERE "songId"=$1 RETURNING score`,[id]);
+   return result.rows[0].score;
+}
+
+export async function deleteSong(id:number) {
+    await connection.query(`DELETE FROM songscore WHERE "songId"=$1`,[id]);
+    await connection.query(`DELETE FROM songs WHERE id=$1`,[id]);
+}

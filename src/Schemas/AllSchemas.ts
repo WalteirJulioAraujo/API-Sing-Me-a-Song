@@ -8,3 +8,7 @@ export const songSchema = joi.object({
 export const vote = joi.object({
     id: joi.number().required().positive() 
 })
+
+export const amountSchema = joi.object({
+    amount: joi.number().required().positive() 
+})

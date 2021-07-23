@@ -32,3 +32,13 @@ export async function randomSong(scoregreater:boolean,searchAll:boolean) {
    }
    return result.rows;
 }
+
+export async function searchTopSongs(amount:number) {
+   const result = await connection.query(`
+   SELECT songs.*,songscore.score FROM songs 
+   JOIN songscore ON songscore."songId"= songs.id
+   ORDER BY songscore.score DESC
+   LIMIT $1 
+   `,[amount]);
+   return result.rows;
+}

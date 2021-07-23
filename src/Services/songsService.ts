@@ -25,3 +25,9 @@ export async function randomSong() {
 
     return result[chooseRandom];
 }
+
+export async function topSong(amount:number) {
+    const result = await songsRepository.searchTopSongs(amount);
+    if(result.length===0) return false;
+    return result;
+}

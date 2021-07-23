@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import * as songsService from "../Services/songsService";
-import { songSchema, vote } from "../Schemas/AllSchemas";
+import { songSchema, amountSchema } from "../Schemas/AllSchemas";
 
 export async function sendSong(req:Request,res:Response){
 
@@ -25,8 +25,33 @@ export async function sendSong(req:Request,res:Response){
 }
 
 export async function randomSong(req:Request,res:Response){
-    const result =  await songsService.randomSong();
-    if(!result) return res.sendStatus(404);
-    res.send(result).status(200);
-    console.log(result);
+    try{
+        const result =  await songsService.randomSong();
+        if(!result) return res.sendStatus(404);
+        res.send(result).status(200);
+    }catch(error){
+        console.log(error);
+        res.sendStatus(500);
+    }
+}
+
+export async function topSong(req:Request,res:Response) {
+    const amount = Number(req.params.amount);
+
+    const validate = amountSchema.validate({amount});
+    if(validate.error){
+        console.log(validate.error);
+        return res.sendStatus(400);
+    }
+
+    try{
+        const result = await songsService.topSong(amount);
+        if(!result) return res.sendStatus(404);
+
+        res.send(result).status(200);
+
+    }catch(error){
+        console.log(error);
+        res.sendStatus(500);
+    }
 }

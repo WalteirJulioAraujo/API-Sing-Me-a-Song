@@ -1,7 +1,8 @@
-
+import faker from "faker";
 
 export async function createSong(){
-    const name = "teste";
-    const youtubeLink = "https://www.youtube.com/watch?v=GOFiGClu0uk&ab_channel=COLORS";
+    const name = faker.name.findName();
+    const youtubeLink = `https://www.youtube.com/watch?v=${faker.random.alphaNumeric(11)}`;
     return {name,youtubeLink};
 }
+

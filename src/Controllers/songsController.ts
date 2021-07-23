@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import * as songsService from "../Services/songsService";
-import { songSchema } from "../Schemas/AllSchemas";
+import { songSchema, vote } from "../Schemas/AllSchemas";
 
 export async function sendSong(req:Request,res:Response){
 

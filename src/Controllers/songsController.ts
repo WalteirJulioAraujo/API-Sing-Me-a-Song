@@ -23,3 +23,10 @@ export async function sendSong(req:Request,res:Response){
     }
       
 }
+
+export async function randomSong(req:Request,res:Response){
+    const result =  await songsService.randomSong();
+    if(!result) return res.sendStatus(404);
+    res.send(result).status(200);
+    console.log(result);
+}

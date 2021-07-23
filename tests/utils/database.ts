@@ -18,3 +18,11 @@ export async function insertSong(name:string, youtubeLink:string) {
     
     return result.rows[0];
 }
+
+export async function insertVote(id:number) {
+    const result = await connection.query(`INSERT INTO songscore ("songId",score) VALUES ($1,0) RETURNING *`,[id])
+}
+
+export async function insertUpVote(id:number) {
+    await connection.query(`UPDATE songscore SET score=score+1 WHERE "songId"=$1`,[id]);
+}

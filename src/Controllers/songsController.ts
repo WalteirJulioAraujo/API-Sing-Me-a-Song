@@ -37,7 +37,7 @@ export async function randomSong(req:Request,res:Response){
 
 export async function topSong(req:Request,res:Response) {
     const amount = Number(req.params.amount);
-
+    
     const validate = amountSchema.validate({amount});
     if(validate.error){
         console.log(validate.error);

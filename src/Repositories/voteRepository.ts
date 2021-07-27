@@ -1,11 +1,18 @@
 import connection from "../database";
 
-export async function checksIfExistsSong(id:number) {
+//interfaces
+interface Song {
+    id:number;
+    name:string;
+    youtubeLink:string;
+}
+
+export async function checksIfExistsSong(id:number) : Promise<Song> {
     const result = await connection.query(`SELECT * FROM songs WHERE id=$1`,[id]);
     return result.rows[0];
 }
 
-export async function checksIfExistsVote(id:number) {
+export async function checksIfExistsVote(id:number) : Promise<Song> {
     const result = await connection.query(`SELECT * FROM songscore WHERE "songId"=$1`,[id]);
     return result.rows[0];
 }
@@ -18,7 +25,7 @@ export async function upVote(id:number) {
     await connection.query(`UPDATE songscore SET score=score+1 WHERE "songId"=$1`,[id]);
 }
 
-export async function downVote(id:number) {
+export async function downVote(id:number) : Promise<number> {
    const result = await connection.query(`UPDATE songscore SET score=score-1 WHERE "songId"=$1 RETURNING score`,[id]);
    return result.rows[0].score;
 }

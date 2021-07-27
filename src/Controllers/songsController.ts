@@ -2,11 +2,17 @@ import { Request, Response } from "express";
 import * as songsService from "../Services/songsService";
 import { songSchema, amountSchema } from "../Schemas/AllSchemas";
 
+//interfaces
+interface BodySong{
+    name:string;
+    youtubeLink:string;
+}
+
 export async function sendSong(req:Request,res:Response){
 
-    const { name, youtubeLink } = req.body;
+    const { name, youtubeLink } : BodySong = req.body;
     
-    const validate = songSchema.validate(req.body);
+    const validate = songSchema.validate({ name, youtubeLink });
     if(validate.error){
         console.log(validate.error);
         return res.sendStatus(400);
